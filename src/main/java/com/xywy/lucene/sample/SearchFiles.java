@@ -25,6 +25,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Date;
 
+import com.xywy.lucene.lucene.IKAnalyzer;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -46,12 +47,12 @@ public class SearchFiles {
     }
 
     public static void main(String[] args) throws Exception {
-        String index = "E:\\ikanalyzer\\Index";
+        String index = "D:\\project\\lucene\\index";
         String field = "contents";
         String queries = null;
         int repeat = 0;
         boolean raw = false;
-        String queryString = "suxiong";
+        String queryString = "python";
         // 每页显示搜索个数
         int hitsPerPage = 10;
         // 实例化读取器
@@ -59,7 +60,7 @@ public class SearchFiles {
         // 实例化搜索器
         IndexSearcher searcher = new IndexSearcher(reader);
         // 实例化分析器
-        Analyzer analyzer = new StandardAnalyzer();
+        Analyzer analyzer = new IKAnalyzer();
 
         BufferedReader in = null;
         if (queries != null) {
@@ -116,6 +117,9 @@ public class SearchFiles {
         TopDocs results = searcher.search(query, 5 * hitsPerPage);
         ScoreDoc[] hits = results.scoreDocs;
 
+        float maxScore = results.getMaxScore();
+        System.out.println("最匹配的分值:"+maxScore);
+
         int numTotalHits = results.totalHits;
         System.out.println(numTotalHits + " total matching documents");
 
@@ -145,8 +149,10 @@ public class SearchFiles {
                 Document doc = searcher.doc(hits[i].doc);
                 String path = doc.get("path");
                 if (path != null) {
-                    System.out.println((i + 1) + ". " + path);
+                    System.out.println((i + 1) + ". " + path + " score:" + hits[i].score);
                     String title = doc.get("title");
+                    Document targetDoc = searcher.doc(hits[i].doc);
+//                    System.out.println("内容：" + targetDoc.getField("contents"));
                     if (title != null) {
                         System.out.println("   Title: " + doc.get("title"));
                     }

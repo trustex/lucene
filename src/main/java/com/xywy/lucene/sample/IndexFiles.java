@@ -1,5 +1,6 @@
 package com.xywy.lucene.sample;
 
+import com.xywy.lucene.lucene.IKAnalyzer;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.*;
@@ -29,8 +30,8 @@ public class IndexFiles {
      * Index all text files under a directory.
      */
     public static void main(String[] args) {
-        String indexPath = "E:\\ikanalyzer\\Index";
-        String docsPath = "E:\\ikanalyzer\\Data\\testLucene.txt";
+        String indexPath = "D:\\project\\lucene\\Index";
+        String docsPath = "D:\\project\\lucene\\data";
         //默认设置为添加新索引
         boolean create = true;
         final Path docDir = Paths.get(docsPath);
@@ -45,7 +46,8 @@ public class IndexFiles {
 
             ////获取真实文件在文件系统的存储路径
             Directory dir = FSDirectory.open(Paths.get(indexPath));
-            Analyzer analyzer = new StandardAnalyzer();
+//            Analyzer analyzer = new StandardAnalyzer();
+            Analyzer analyzer = new IKAnalyzer();
             IndexWriterConfig iwc = new IndexWriterConfig(analyzer);
 
             if (create) {

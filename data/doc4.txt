@@ -1,0 +1,8 @@
+Python 发展历史
+Python 是由 Guido van Rossum 在八十年代末和九十年代初，在荷兰国家数学和计算机科学研究所设计出来的。
+
+Python 本身也是由诸多其他语言发展而来的,这包括 ABC、Modula-3、C、C++、Algol-68、SmallTalk、Unix shell 和其他的脚本语言等等。
+
+像 Perl 语言一样，Python 源代码同样遵循 GPL(GNU General Public License)协议。
+
+现在 Python 是由一个核心开发团队在维护，Guido van Rossum 仍然占据着至关重要的作用，指导其进展。
