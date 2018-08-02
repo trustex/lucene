@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xywy.lucene;
+package com.xywy.lucene.sample;
 
 
 import java.io.BufferedReader;
@@ -38,62 +38,27 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.FSDirectory;
 
 /**
- * Simple command-line based search demo.
+ * 搜索文件
  */
 public class SearchFiles {
 
     private SearchFiles() {
     }
 
-    /**
-     * Simple command-line based search demo.
-     */
     public static void main(String[] args) throws Exception {
-        String usage =
-                "Usage:\tjava org.apache.lucene.demo.SearchFiles [-index dir] [-field f] [-repeat n] [-queries file] [-query string] [-raw] [-paging hitsPerPage]\n\nSee http://lucene.apache.org/core/4_1_0/demo/ for details.";
-        if (args.length > 0 && ("-h".equals(args[0]) || "-help".equals(args[0]))) {
-            System.out.println(usage);
-            System.exit(0);
-        }
-
         String index = "E:\\ikanalyzer\\Index";
         String field = "contents";
         String queries = null;
         int repeat = 0;
         boolean raw = false;
         String queryString = "suxiong";
+        // 每页显示搜索个数
         int hitsPerPage = 10;
-
-        for (int i = 0; i < args.length; i++) {
-            if ("-index".equals(args[i])) {
-                index = args[i + 1];
-                i++;
-            } else if ("-field".equals(args[i])) {
-                field = args[i + 1];
-                i++;
-            } else if ("-queries".equals(args[i])) {
-                queries = args[i + 1];
-                i++;
-            } else if ("-query".equals(args[i])) {
-                queryString = args[i + 1];
-                i++;
-            } else if ("-repeat".equals(args[i])) {
-                repeat = Integer.parseInt(args[i + 1]);
-                i++;
-            } else if ("-raw".equals(args[i])) {
-                raw = true;
-            } else if ("-paging".equals(args[i])) {
-                hitsPerPage = Integer.parseInt(args[i + 1]);
-                if (hitsPerPage <= 0) {
-                    System.err.println("There must be at least 1 hit per page.");
-                    System.exit(1);
-                }
-                i++;
-            }
-        }
-
+        // 实例化读取器
         IndexReader reader = DirectoryReader.open(FSDirectory.open(Paths.get(index)));
+        // 实例化搜索器
         IndexSearcher searcher = new IndexSearcher(reader);
+        // 实例化分析器
         Analyzer analyzer = new StandardAnalyzer();
 
         BufferedReader in = null;
@@ -102,9 +67,10 @@ public class SearchFiles {
         } else {
             in = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
         }
+        // 构造QueryParser查询分析器
         QueryParser parser = new QueryParser(field, analyzer);
         while (true) {
-            if (queries == null && queryString == null) {                        // prompt the user
+            if (queries == null && queryString == null) {
                 System.out.println("Enter query: ");
             }
 
@@ -118,11 +84,11 @@ public class SearchFiles {
             if (line.length() == 0) {
                 break;
             }
-
+            // 构造Query对象
             Query query = parser.parse(line);
             System.out.println("Searching for: " + query.toString(field));
 
-            if (repeat > 0) {                           // repeat & time as benchmark
+            if (repeat > 0) {
                 Date start = new Date();
                 for (int i = 0; i < repeat; i++) {
                     searcher.search(query, 100);
@@ -141,18 +107,12 @@ public class SearchFiles {
     }
 
     /**
-     * This demonstrates a typical paging search scenario, where the search engine presents
-     * pages of size n to the user. The user can then go to the next page if interested in
-     * the next hits.
-     * <p>
-     * When the query is executed for the first time, then only enough results are collected
-     * to fill 5 result pages. If the user wants to page beyond this limit, then the query
-     * is executed another time and all hits are collected.
+     * 这演示了一个典型的分页搜索场景，搜索引擎在其中显示页面大小为n给用户。如果用户感兴趣，可以进入下一页
      */
     public static void doPagingSearch(BufferedReader in, IndexSearcher searcher, Query query,
                                       int hitsPerPage, boolean raw, boolean interactive) throws IOException {
 
-        // Collect enough docs to show 5 pages
+        // 收集足够的文档显示5页
         TopDocs results = searcher.search(query, 5 * hitsPerPage);
         ScoreDoc[] hits = results.scoreDocs;
 
@@ -177,7 +137,7 @@ public class SearchFiles {
             end = Math.min(hits.length, start + hitsPerPage);
 
             for (int i = start; i < end; i++) {
-                if (raw) {                              // output raw format
+                if (raw) {
                     System.out.println("doc=" + hits[i].doc + " score=" + hits[i].score);
                     continue;
                 }
@@ -235,7 +195,9 @@ public class SearchFiles {
                         }
                     }
                 }
-                if (quit) break;
+                if (quit){
+                    break;
+                }
                 end = Math.min(numTotalHits, start + hitsPerPage);
             }
         }

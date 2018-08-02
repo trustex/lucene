@@ -1,4 +1,4 @@
-package com.xywy.lucene;
+package com.xywy.lucene.sample;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -18,6 +18,9 @@ import java.nio.file.*;
 import java.util.Date;
 import java.nio.file.attribute.BasicFileAttributes;
 
+/**
+ * 创建索引
+ */
 public class IndexFiles {
     private IndexFiles() {
     }
