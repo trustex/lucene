@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xywy.lucene.mapper.DoctorMapper" >
+  <resultMap id="BaseResultMap" type="com.xywy.lucene.model.Doctor" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="pinyin" property="pinyin" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="SMALLINT" />
+    <result column="birthday" property="birthday" jdbcType="DATE" />
+    <result column="docimage" property="docimage" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="SMALLINT" />
+    <result column="department" property="department" jdbcType="SMALLINT" />
+    <result column="teach" property="teach" jdbcType="SMALLINT" />
+    <result column="mobilephone" property="mobilephone" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="pub" property="pub" jdbcType="SMALLINT" />
+    <result column="weight" property="weight" jdbcType="DOUBLE" />
+    <result column="uuidExpert" property="uuidexpert" jdbcType="INTEGER" />
+    <result column="source" property="source" jdbcType="VARCHAR" />
+    <result column="updatetime" property="updatetime" jdbcType="INTEGER" />
+    <result column="scheduletimes" property="scheduletimes" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.xywy.lucene.model.DoctorWithBLOBs" extends="BaseResultMap" >
+    <result column="goodat" property="goodat" jdbcType="LONGVARCHAR" />
+    <result column="info" property="info" jdbcType="LONGVARCHAR" />
+    <result column="url" property="url" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, name, pinyin, sex, birthday, docimage, title, department, teach, mobilephone, 
+    email, pub, weight, uuidExpert, source, updatetime, scheduletimes
+  </sql>
+  <sql id="Blob_Column_List" >
+    goodat, info, url
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.xywy.lucene.model.DoctorExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from doctor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xywy.lucene.model.DoctorExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from doctor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from doctor
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from doctor
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xywy.lucene.model.DoctorExample" >
+    delete from doctor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xywy.lucene.model.DoctorWithBLOBs" >
+    insert into doctor (id, name, pinyin, 
+      sex, birthday, docimage, 
+      title, department, teach, 
+      mobilephone, email, pub, 
+      weight, uuidExpert, source, 
+      updatetime, scheduletimes, goodat, 
+      info, url)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{pinyin,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=SMALLINT}, #{birthday,jdbcType=DATE}, #{docimage,jdbcType=VARCHAR}, 
+      #{title,jdbcType=SMALLINT}, #{department,jdbcType=SMALLINT}, #{teach,jdbcType=SMALLINT}, 
+      #{mobilephone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{pub,jdbcType=SMALLINT}, 
+      #{weight,jdbcType=DOUBLE}, #{uuidexpert,jdbcType=INTEGER}, #{source,jdbcType=VARCHAR}, 
+      #{updatetime,jdbcType=INTEGER}, #{scheduletimes,jdbcType=INTEGER}, #{goodat,jdbcType=LONGVARCHAR}, 
+      #{info,jdbcType=LONGVARCHAR}, #{url,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xywy.lucene.model.DoctorWithBLOBs" >
+    insert into doctor
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="pinyin != null" >
+        pinyin,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="docimage != null" >
+        docimage,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="department != null" >
+        department,
+      </if>
+      <if test="teach != null" >
+        teach,
+      </if>
+      <if test="mobilephone != null" >
+        mobilephone,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="pub != null" >
+        pub,
+      </if>
+      <if test="weight != null" >
+        weight,
+      </if>
+      <if test="uuidexpert != null" >
+        uuidExpert,
+      </if>
+      <if test="source != null" >
+        source,
+      </if>
+      <if test="updatetime != null" >
+        updatetime,
+      </if>
+      <if test="scheduletimes != null" >
+        scheduletimes,
+      </if>
+      <if test="goodat != null" >
+        goodat,
+      </if>
+      <if test="info != null" >
+        info,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="pinyin != null" >
+        #{pinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=SMALLINT},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="docimage != null" >
+        #{docimage,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=SMALLINT},
+      </if>
+      <if test="department != null" >
+        #{department,jdbcType=SMALLINT},
+      </if>
+      <if test="teach != null" >
+        #{teach,jdbcType=SMALLINT},
+      </if>
+      <if test="mobilephone != null" >
+        #{mobilephone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="pub != null" >
+        #{pub,jdbcType=SMALLINT},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=DOUBLE},
+      </if>
+      <if test="uuidexpert != null" >
+        #{uuidexpert,jdbcType=INTEGER},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=INTEGER},
+      </if>
+      <if test="scheduletimes != null" >
+        #{scheduletimes,jdbcType=INTEGER},
+      </if>
+      <if test="goodat != null" >
+        #{goodat,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="info != null" >
+        #{info,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xywy.lucene.model.DoctorExample" resultType="java.lang.Integer" >
+    select count(*) from doctor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update doctor
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pinyin != null" >
+        pinyin = #{record.pinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=SMALLINT},
+      </if>
+      <if test="record.birthday != null" >
+        birthday = #{record.birthday,jdbcType=DATE},
+      </if>
+      <if test="record.docimage != null" >
+        docimage = #{record.docimage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=SMALLINT},
+      </if>
+      <if test="record.department != null" >
+        department = #{record.department,jdbcType=SMALLINT},
+      </if>
+      <if test="record.teach != null" >
+        teach = #{record.teach,jdbcType=SMALLINT},
+      </if>
+      <if test="record.mobilephone != null" >
+        mobilephone = #{record.mobilephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pub != null" >
+        pub = #{record.pub,jdbcType=SMALLINT},
+      </if>
+      <if test="record.weight != null" >
+        weight = #{record.weight,jdbcType=DOUBLE},
+      </if>
+      <if test="record.uuidexpert != null" >
+        uuidExpert = #{record.uuidexpert,jdbcType=INTEGER},
+      </if>
+      <if test="record.source != null" >
+        source = #{record.source,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatetime != null" >
+        updatetime = #{record.updatetime,jdbcType=INTEGER},
+      </if>
+      <if test="record.scheduletimes != null" >
+        scheduletimes = #{record.scheduletimes,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodat != null" >
+        goodat = #{record.goodat,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.info != null" >
+        info = #{record.info,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.url != null" >
+        url = #{record.url,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update doctor
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      pinyin = #{record.pinyin,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=SMALLINT},
+      birthday = #{record.birthday,jdbcType=DATE},
+      docimage = #{record.docimage,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=SMALLINT},
+      department = #{record.department,jdbcType=SMALLINT},
+      teach = #{record.teach,jdbcType=SMALLINT},
+      mobilephone = #{record.mobilephone,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      pub = #{record.pub,jdbcType=SMALLINT},
+      weight = #{record.weight,jdbcType=DOUBLE},
+      uuidExpert = #{record.uuidexpert,jdbcType=INTEGER},
+      source = #{record.source,jdbcType=VARCHAR},
+      updatetime = #{record.updatetime,jdbcType=INTEGER},
+      scheduletimes = #{record.scheduletimes,jdbcType=INTEGER},
+      goodat = #{record.goodat,jdbcType=LONGVARCHAR},
+      info = #{record.info,jdbcType=LONGVARCHAR},
+      url = #{record.url,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update doctor
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      pinyin = #{record.pinyin,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=SMALLINT},
+      birthday = #{record.birthday,jdbcType=DATE},
+      docimage = #{record.docimage,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=SMALLINT},
+      department = #{record.department,jdbcType=SMALLINT},
+      teach = #{record.teach,jdbcType=SMALLINT},
+      mobilephone = #{record.mobilephone,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      pub = #{record.pub,jdbcType=SMALLINT},
+      weight = #{record.weight,jdbcType=DOUBLE},
+      uuidExpert = #{record.uuidexpert,jdbcType=INTEGER},
+      source = #{record.source,jdbcType=VARCHAR},
+      updatetime = #{record.updatetime,jdbcType=INTEGER},
+      scheduletimes = #{record.scheduletimes,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xywy.lucene.model.DoctorWithBLOBs" >
+    update doctor
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="pinyin != null" >
+        pinyin = #{pinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=SMALLINT},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="docimage != null" >
+        docimage = #{docimage,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=SMALLINT},
+      </if>
+      <if test="department != null" >
+        department = #{department,jdbcType=SMALLINT},
+      </if>
+      <if test="teach != null" >
+        teach = #{teach,jdbcType=SMALLINT},
+      </if>
+      <if test="mobilephone != null" >
+        mobilephone = #{mobilephone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="pub != null" >
+        pub = #{pub,jdbcType=SMALLINT},
+      </if>
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=DOUBLE},
+      </if>
+      <if test="uuidexpert != null" >
+        uuidExpert = #{uuidexpert,jdbcType=INTEGER},
+      </if>
+      <if test="source != null" >
+        source = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null" >
+        updatetime = #{updatetime,jdbcType=INTEGER},
+      </if>
+      <if test="scheduletimes != null" >
+        scheduletimes = #{scheduletimes,jdbcType=INTEGER},
+      </if>
+      <if test="goodat != null" >
+        goodat = #{goodat,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="info != null" >
+        info = #{info,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.xywy.lucene.model.DoctorWithBLOBs" >
+    update doctor
+    set name = #{name,jdbcType=VARCHAR},
+      pinyin = #{pinyin,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=SMALLINT},
+      birthday = #{birthday,jdbcType=DATE},
+      docimage = #{docimage,jdbcType=VARCHAR},
+      title = #{title,jdbcType=SMALLINT},
+      department = #{department,jdbcType=SMALLINT},
+      teach = #{teach,jdbcType=SMALLINT},
+      mobilephone = #{mobilephone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      pub = #{pub,jdbcType=SMALLINT},
+      weight = #{weight,jdbcType=DOUBLE},
+      uuidExpert = #{uuidexpert,jdbcType=INTEGER},
+      source = #{source,jdbcType=VARCHAR},
+      updatetime = #{updatetime,jdbcType=INTEGER},
+      scheduletimes = #{scheduletimes,jdbcType=INTEGER},
+      goodat = #{goodat,jdbcType=LONGVARCHAR},
+      info = #{info,jdbcType=LONGVARCHAR},
+      url = #{url,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xywy.lucene.model.Doctor" >
+    update doctor
+    set name = #{name,jdbcType=VARCHAR},
+      pinyin = #{pinyin,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=SMALLINT},
+      birthday = #{birthday,jdbcType=DATE},
+      docimage = #{docimage,jdbcType=VARCHAR},
+      title = #{title,jdbcType=SMALLINT},
+      department = #{department,jdbcType=SMALLINT},
+      teach = #{teach,jdbcType=SMALLINT},
+      mobilephone = #{mobilephone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      pub = #{pub,jdbcType=SMALLINT},
+      weight = #{weight,jdbcType=DOUBLE},
+      uuidExpert = #{uuidexpert,jdbcType=INTEGER},
+      source = #{source,jdbcType=VARCHAR},
+      updatetime = #{updatetime,jdbcType=INTEGER},
+      scheduletimes = #{scheduletimes,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getDoctors" parameterType="map" resultType="com.xywy.lucene.model.DoctorWithBLOBs">
+    select
+    id, name, pinyin, goodat, info
+    from doctor
+    limit #{limit} offset #{offset}
+  </select>
+</mapper>
