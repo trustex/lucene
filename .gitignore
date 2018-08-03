@@ -10,3 +10,5 @@ gen
 .gitignore
 src/test/
 target/generated-sources/
+/.idea
+/target
