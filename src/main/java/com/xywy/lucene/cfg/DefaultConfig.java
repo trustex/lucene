@@ -53,9 +53,9 @@ public class DefaultConfig implements Configuration {
    */
   private static final String FILE_NAME = "IKAnalyzer.cfg.xml";
   // 配置属性——扩展字典
-  private static final String EXT_DICT = "ext_dict";
+  private static final String EXT_DICT = "ext_dic";
   // 配置属性——扩展停止词典
-  private static final String EXT_STOP = "ext_stopwords";
+  private static final String EXT_STOP = "ext_stopword";
 
   private Properties props;
   /*

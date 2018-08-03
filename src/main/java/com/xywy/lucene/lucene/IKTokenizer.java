@@ -42,7 +42,7 @@ import java.io.IOException;
 
 /**
  * IK分词器 Lucene Tokenizer适配器类
- * 兼容Lucene 4.0版本
+ * 兼容Lucene 6.0版本
  */
 public final class IKTokenizer extends Tokenizer {
   // IK分词器实现

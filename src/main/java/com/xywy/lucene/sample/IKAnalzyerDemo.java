@@ -51,7 +51,7 @@ public class IKAnalzyerDemo {
 
         try {
             ts = analyzer.tokenStream("myfield",
-                    new StringReader("这是一个中文分词的例子，你可以直接运行它！IKAnalyer can analysis english text too"));
+                    new StringReader("这是一个中文分词的例子，苏雄伟你可以直接运行它！IKAnalyer can analysis english text too it is a good search engine"));
 
             // 获取词元位置属性
             OffsetAttribute offset = ts.addAttribute(OffsetAttribute.class);
