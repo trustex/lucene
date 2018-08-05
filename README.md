@@ -13,11 +13,11 @@ IKAnalyzer 是一个开源的，基于java语言开发的轻量级的中文分�
     + lucene 6.6.5:<http://www.apache.org/dyn/closer.lua/lucene/java/6.6.5>
     + IKAnalyzer 2012FF:<https://gitee.com/wltea/IK-Analyzer-2012FF>
 ## 数据准备
-通过Python爬取百度百科的词条数据作为本搜索引擎的基础数据，爬取介绍及操作方式见[PythonSpider](https://github.com/suxiongwei/PythonSpider) 
+通过Python爬取百度百科的词条数据作为本搜索的基础数据，爬取介绍及操作方式见[PythonSpider](https://github.com/suxiongwei/PythonSpider) 
 ## 演示步骤
 - 1、MySQL服务
 - 2、启动服务：SearchApp
-- 3、生成索引：访问http://localhost:8080/createIndex生成索引文件
+- 3、生成索引：访问http://localhost:8080/createIndex
 ```java
     @GetMapping("/createIndex")
     public String createIndex() {
@@ -56,6 +56,6 @@ IKAnalyzer 是一个开源的，基于java语言开发的轻量级的中文分�
         return mv;
     }
 ```
-![search](https://github.com/suxiongwei/lucene/tree/master/src/main/resources/static/img/search.jpg)
-![result](https://github.com/suxiongwei/lucene/tree/master/src/main/resources/static/img/result.jpg)
+![search](https://github.com/suxiongwei/lucene/blob/master/src/main/resources/static/img/search.jpg)
+![result](https://github.com/suxiongwei/lucene/blob/master/src/main/resources/static/img/result.jpg)
 
