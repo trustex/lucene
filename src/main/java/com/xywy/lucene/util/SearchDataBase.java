@@ -28,7 +28,7 @@ import java.util.Map;
 @Component
 public class SearchDataBase {
     //Lucene索引文件路径
-    String indexPath = "E:\\doctor\\index";
+    String indexPath = "E:\\baike\\index";
 
     //定义分词器
     static Analyzer analyzer = new IKAnalyzer();
@@ -54,7 +54,9 @@ public class SearchDataBase {
         // 构造Query对象
         Query query = parser.parse(line);
         //最终被分词后添加的前缀和后缀处理器，默认是粗体<B></B>
-        SimpleHTMLFormatter htmlFormatter = new SimpleHTMLFormatter("<font color=red>","</font>");
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append("<font color=").append("\"").append("red").append("\"").append(">");
+        SimpleHTMLFormatter htmlFormatter = new SimpleHTMLFormatter(stringBuffer.toString(),"</font>");
         //高亮搜索的词添加到高亮处理器中
         Highlighter highlighter = new Highlighter(htmlFormatter, new QueryScorer(query));
 
@@ -73,22 +75,21 @@ public class SearchDataBase {
             map.put("id", hitDoc.get("id"));
 
             //获取到name
-            String name=hitDoc.get("goodat");
+            String name=hitDoc.get("summary");
             //将查询的词和搜索词匹配，匹配到添加前缀和后缀
-            TokenStream tokenStream = TokenSources.getAnyTokenStream(searcher.getIndexReader(), id, "goodat", analyzer);
+            TokenStream tokenStream = TokenSources.getAnyTokenStream(searcher.getIndexReader(), id, "summary", analyzer);
             //传入的第二个参数是查询的值
             TextFragment[] frag = highlighter.getBestTextFragments(tokenStream, name, false, 10);
-            String doctorValue="";
+            String baikeValue="";
             for (int j = 0; j < frag.length; j++) {
-                if ((frag[j] != null) && (frag[j].getScore() > 0)) {
+//                if ((frag[j] != null) && (frag[j].getScore() > 0)) {
+                if ((frag[j] != null)) {
                     //获取 foodname 的值
-                    doctorValue=((frag[j].toString()));
+                    baikeValue=baikeValue+((frag[j].toString()));
                 }
             }
-            map.put("name", hitDoc.get("name"));
-
-            map.put("goodat", doctorValue);
-            map.put("info", hitDoc.get("info"));
+            map.put("title", hitDoc.get("title"));
+            map.put("summary", baikeValue);
             list.add(map);
         }
         reader.close();

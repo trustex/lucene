@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xywy.lucene.mapper.BaikeMapper" >
+  <resultMap id="BaseResultMap" type="com.xywy.lucene.model.Baike" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.xywy.lucene.model.Baike" extends="BaseResultMap" >
+    <result column="summary" property="summary" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, title
+  </sql>
+  <sql id="Blob_Column_List" >
+    summary
+  </sql>
+  <select id="getAllBaike" resultType="com.xywy.lucene.model.Baike">
+    select * from baike limit #{limit} offset #{offset};
+  </select>
+</mapper>

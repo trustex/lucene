@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 @Component
 public class IndexDataBase {
     //Lucene索引文件路径
-    String indexPath = "E:\\doctor\\index";
+    String indexPath = "E:\\baike\\index";
 
     //定义分词器
     static Analyzer analyzer = new IKAnalyzer();

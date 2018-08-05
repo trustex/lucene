@@ -1,0 +1,5 @@
+#
+## 构建配置中心
+#spring:
+#  application:
+#    name: lucene

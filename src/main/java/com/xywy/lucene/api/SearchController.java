@@ -1,7 +1,7 @@
 package com.xywy.lucene.api;
 
-import com.xywy.lucene.mapper.DoctorMapper;
-import com.xywy.lucene.model.DoctorWithBLOBs;
+import com.xywy.lucene.mapper.BaikeMapper;
+import com.xywy.lucene.model.Baike;
 import com.xywy.lucene.util.IndexDataBase;
 import com.xywy.lucene.util.SearchDataBase;
 import org.apache.lucene.document.Document;
@@ -10,6 +10,7 @@ import org.apache.lucene.document.TextField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Map;
@@ -17,7 +18,7 @@ import java.util.Map;
 @RestController
 public class SearchController {
     @Autowired
-    private DoctorMapper doctorMapper;
+    private BaikeMapper baikeMapper;
     @Autowired
     private IndexDataBase indexDataBase;
     @Autowired
@@ -26,26 +27,24 @@ public class SearchController {
     @GetMapping("/createIndex")
     public String createIndex() {
         // 拉取数据
-        List<DoctorWithBLOBs> queryCategories = doctorMapper.getDoctors(5,0);
+        List<Baike> baikes = baikeMapper.getAllBaike(12000,1000);
 
-        DoctorWithBLOBs doctor = new DoctorWithBLOBs();
+        Baike baike = new Baike();
         //获取字段
-        for (int i = 0; i < queryCategories.size(); i++) {
+        for (int i = 0; i < baikes.size(); i++) {
             //获取每行数据
-            doctor = queryCategories.get(i);
+            baike = baikes.get(i);
             //创建Document对象
             Document doc = new Document();
             //获取每列数据
 
-            Field name = new Field("name", doctor.getName(), TextField.TYPE_STORED);
-            Field goodat = new Field("goodat", doctor.getGoodat(), TextField.TYPE_STORED);
-            Field info = new Field("info", doctor.getInfo(), TextField.TYPE_STORED);
-            Field pinyin = new Field("pinyin", doctor.getPinyin(), TextField.TYPE_STORED);
+            Field id = new Field("id", baike.getId()+"", TextField.TYPE_STORED);
+            Field title = new Field("title", baike.getTitle(), TextField.TYPE_STORED);
+            Field summary = new Field("summary", baike.getSummary(), TextField.TYPE_STORED);
             //添加到Document中
-            doc.add(name);
-            doc.add(goodat);
-            doc.add(info);
-            doc.add(pinyin);
+            doc.add(id);
+            doc.add(title);
+            doc.add(summary);
             //调用，创建索引库
             indexDataBase.write(doc);
 
@@ -54,8 +53,18 @@ public class SearchController {
     }
 
     //搜索，实现高亮
-    @GetMapping("/searchDoctor")
-    public List<Map> getFood(String keyWord) throws Exception {
-        return searchDataBase.search("goodat", keyWord);
+    @GetMapping("/getSearchText")
+    public ModelAndView getSearchText(String keyWord,String field,ModelAndView mv) throws Exception {
+        List<Map> mapList = searchDataBase.search(field, keyWord);
+        mv.setViewName("/result");
+        mv.addObject("mapList",mapList);
+        return mv;
+    }
+
+    @GetMapping(value = "/search")
+    public ModelAndView test(ModelAndView mv) {
+        mv.setViewName("/search");
+        mv.addObject("title","欢迎使用Thymeleaf!");
+        return mv;
     }
 }
