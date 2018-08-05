@@ -11,7 +11,7 @@
 ## 演示步骤
 - 1、MySQL服务
 - 2、启动服务：SearchApp
-- 3、生成索引：访问http://localhost:8080/createIndex生成索引文件
+- 3、生成索引：访问http://localhost:8080/createIndex
 ```java
     @GetMapping("/createIndex")
     public String createIndex() {
