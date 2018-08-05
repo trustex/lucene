@@ -51,5 +51,5 @@
     }
 ```
 ![search](https://github.com/suxiongwei/lucene/blob/master/src/main/resources/static/img/search.jpg)
-![result](https://github.com/suxiongwei/lucene/tree/master/src/main/resources/static/img/result.jpg)
+![result](https://github.com/suxiongwei/lucene/blob/master/src/main/resources/static/img/result.jpg)
 
