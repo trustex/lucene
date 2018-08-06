@@ -15,7 +15,7 @@ Lucene的目的是为软件开发人员提供一个简单易用的工具包，�
 ## 数据准备
 通过Python爬取百度百科的词条数据作为本搜索的基础数据，爬取介绍及操作方式见[PythonSpider](https://github.com/suxiongwei/PythonSpider) 
 ## 演示步骤
-- 1、MySQL服务
+- 1、开启MySQL服务
 - 2、启动服务：SearchApp
 - 3、生成索引：访问http://localhost:8080/createIndex
 ```java
