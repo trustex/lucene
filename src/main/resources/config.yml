@@ -1,0 +1,7 @@
+# config
+# Lucene
+config:
+  indexPath: E:\\baike\\index
+  #IK Analyzer Config
+  ext_dic: ext.dic
+  ext_stopword: stopword.dic

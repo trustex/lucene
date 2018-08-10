@@ -1,7 +1,0 @@
-ython是一种解释型、面向对象、动态数据类型的高级程序设计语言。
-
-Python由Guido van Rossum于1989年底发明，第一个公开发行版发行于1991年。
-
-像Perl语言一样, Python 源代码同样遵循 GPL(GNU General Public License)协议。
-
-本教程主要针对Python 2.x版本的学习，如果你使用的是Python 3.x版本请移步至Python 3.X版本的教程。

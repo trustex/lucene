@@ -17,17 +17,15 @@ import java.util.Map;
 
 @RestController
 public class SearchController {
-    @Autowired
-    private BaikeMapper baikeMapper;
-    @Autowired
-    private IndexDataBase indexDataBase;
-    @Autowired
-    private SearchDataBase searchDataBase;
+    @Autowired private BaikeMapper baikeMapper;
+    @Autowired private IndexDataBase indexDataBase;
+    @Autowired private SearchDataBase searchDataBase;
+
 
     @GetMapping("/createIndex")
-    public String createIndex() {
+    public String createIndex(int limit,int offset) {
         // 拉取数据
-        List<Baike> baikes = baikeMapper.getAllBaike(12000,1000);
+        List<Baike> baikes = baikeMapper.getAllBaike(limit,offset);
 
         Baike baike = new Baike();
         //获取字段
@@ -55,6 +53,10 @@ public class SearchController {
     //搜索，实现高亮
     @GetMapping("/getSearchText")
     public ModelAndView getSearchText(String keyWord,String field,ModelAndView mv) throws Exception {
+        if(keyWord == null || keyWord.equals("")){
+            mv.setViewName("/error");
+            mv.addObject("message","查询关键词不能为空");
+        }
         List<Map> mapList = searchDataBase.search(field, keyWord);
         mv.setViewName("/result");
         mv.addObject("mapList",mapList);
@@ -67,4 +69,7 @@ public class SearchController {
         mv.addObject("title","欢迎使用Thymeleaf!");
         return mv;
     }
+
+
+
 }

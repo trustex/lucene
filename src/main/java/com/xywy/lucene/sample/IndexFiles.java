@@ -30,8 +30,8 @@ public class IndexFiles {
      * Index all text files under a directory.
      */
     public static void main(String[] args) {
-        String indexPath = "D:\\project\\lucene\\Index";
-        String docsPath = "D:\\project\\lucene\\data";
+        String indexPath = "E:\\doctor\\index";
+        String docsPath = "E:\\doctor\\data";
         //默认设置为添加新索引
         boolean create = true;
         final Path docDir = Paths.get(docsPath);

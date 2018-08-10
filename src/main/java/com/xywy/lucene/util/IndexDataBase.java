@@ -7,15 +7,20 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.nio.file.Paths;
 
-@Component
+@Component//使用@Configuration也可以
+@PropertySource(value = "classpath:config.yml")//配置文件路径
 public class IndexDataBase {
     //Lucene索引文件路径
-    String indexPath = "E:\\baike\\index";
+    @Value("indexPath")
+    private String indexPath;
 
     //定义分词器
     static Analyzer analyzer = new IKAnalyzer();
@@ -43,4 +48,11 @@ public class IndexDataBase {
         }
     }
 
+    public String getIndexPath() {
+        return indexPath;
+    }
+
+    public void setIndexPath(String indexPath) {
+        this.indexPath = indexPath;
+    }
 }

@@ -25,6 +25,10 @@
  */
 package com.xywy.lucene.cfg;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -37,6 +41,8 @@ import java.util.Properties;
  * 2012-5-8
  *
  */
+@Component
+@PropertySource(value = "classpath:config.yml")//配置文件路径
 public class DefaultConfig implements Configuration {
 
   /*
@@ -57,7 +63,11 @@ public class DefaultConfig implements Configuration {
   // 配置属性——扩展停止词典
   private static final String EXT_STOP = "ext_stopword";
 
-  private Properties props;
+  @Value("${ext_dic}")
+  private String extDic;
+
+  @Value("${ext_stopword}")
+  private String extStopword;
   /*
    * 是否使用smart方式分词
    */
@@ -69,24 +79,6 @@ public class DefaultConfig implements Configuration {
    */
   public static Configuration getInstance() {
     return new DefaultConfig();
-  }
-
-  /*
-   * 初始化配置文件
-   */
-  private DefaultConfig() {
-    props = new Properties();
-
-    InputStream input = this.getClass().getClassLoader().getResourceAsStream(FILE_NAME);
-    if (input != null) {
-      try {
-        props.loadFromXML(input);
-      } catch (InvalidPropertiesFormatException e) {
-        e.printStackTrace();
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-    }
   }
 
   /**
@@ -135,10 +127,9 @@ public class DefaultConfig implements Configuration {
   @Override
   public List<String> getExtDictionarys() {
     List<String> extDictFiles = new ArrayList<String>(2);
-    String extDictCfg = props.getProperty(EXT_DICT);
-    if (extDictCfg != null) {
+    if (extDic != null) {
       // 使用;分割多个扩展字典配置
-      String[] filePaths = extDictCfg.split(";");
+      String[] filePaths = extDic.split(";");
       if (filePaths != null) {
         for (String filePath : filePaths) {
           if (filePath != null && !"".equals(filePath.trim())) {
@@ -157,10 +148,9 @@ public class DefaultConfig implements Configuration {
   @Override
   public List<String> getExtStopWordDictionarys() {
     List<String> extStopWordDictFiles = new ArrayList<String>(2);
-    String extStopWordDictCfg = props.getProperty(EXT_STOP);
-    if (extStopWordDictCfg != null) {
+    if (extStopword != null) {
       // 使用;分割多个扩展字典配置
-      String[] filePaths = extStopWordDictCfg.split(";");
+      String[] filePaths = extStopword.split(";");
       if (filePaths != null) {
         for (String filePath : filePaths) {
           if (filePath != null && !"".equals(filePath.trim())) {
@@ -172,4 +162,19 @@ public class DefaultConfig implements Configuration {
     return extStopWordDictFiles;
   }
 
+  public String getExtDic() {
+    return extDic;
+  }
+
+  public void setExtDic(String extDic) {
+    this.extDic = extDic;
+  }
+
+  public String getExtStopword() {
+    return extStopword;
+  }
+
+  public void setExtStopword(String extStopword) {
+    this.extStopword = extStopword;
+  }
 }

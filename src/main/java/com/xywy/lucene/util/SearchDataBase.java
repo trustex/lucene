@@ -3,6 +3,7 @@ package com.xywy.lucene.util;
 import com.xywy.lucene.lucene.IKAnalyzer;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
@@ -14,10 +15,14 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.highlight.*;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -25,10 +30,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Component
+@Component//使用@Configuration也可以
+@PropertySource(value = "classpath:config.yml")//配置文件路径
 public class SearchDataBase {
     //Lucene索引文件路径
-    String indexPath = "E:\\baike\\index";
+    @Value("${indexPath}")
+    private String indexPath;
 
     //定义分词器
     static Analyzer analyzer = new IKAnalyzer();
@@ -97,5 +104,11 @@ public class SearchDataBase {
         return list;
     }
 
+    public String getIndexPath() {
+        return indexPath;
+    }
 
+    public void setIndexPath(String indexPath) {
+        this.indexPath = indexPath;
+    }
 }
