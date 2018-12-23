@@ -7,6 +7,7 @@ import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
@@ -53,7 +54,12 @@ public class SearchDataBase {
         IndexSearcher searcher = new IndexSearcher(reader);
         //搜索
         // 构造QueryParser查询分析器
-        QueryParser parser = new QueryParser(field, analyzer);
+//        QueryParser parser = new QueryParser(field, analyzer);
+
+        //创建一个MulitFiledQueryParser对象
+        //可以指定默认搜索的域是多个
+        String[] fields = {"title","summary"};
+        MultiFieldQueryParser parser = new MultiFieldQueryParser(fields,analyzer);
 
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
         String line = value != null ? value : in.readLine();
@@ -81,7 +87,7 @@ public class SearchDataBase {
             Map map=new HashMap();
             map.put("id", hitDoc.get("id"));
 
-            //获取到name
+            //获取到summary
             String name=hitDoc.get("summary");
             //将查询的词和搜索词匹配，匹配到添加前缀和后缀
             TokenStream tokenStream = TokenSources.getAnyTokenStream(searcher.getIndexReader(), id, "summary", analyzer);
@@ -91,11 +97,22 @@ public class SearchDataBase {
             for (int j = 0; j < frag.length; j++) {
 //                if ((frag[j] != null) && (frag[j].getScore() > 0)) {
                 if ((frag[j] != null)) {
-                    //获取 foodname 的值
+                    //获取 summary 的值
                     baikeValue=baikeValue+((frag[j].toString()));
                 }
             }
-            map.put("title", hitDoc.get("title"));
+
+            //获取到title
+            String title=hitDoc.get("title");
+            TokenStream titleTokenStream = TokenSources.getAnyTokenStream(searcher.getIndexReader(), id, "title", analyzer);
+            TextFragment[] titleFrag = highlighter.getBestTextFragments(titleTokenStream, title, false, 10);
+            String titleValue="";
+            for (int j = 0; j < titleFrag.length; j++) {
+                if ((frag[j] != null)) {
+                    titleValue=titleValue+((titleFrag[j].toString()));
+                }
+            }
+            map.put("title", titleValue);
             map.put("summary", baikeValue);
             list.add(map);
         }
