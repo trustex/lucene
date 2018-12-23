@@ -34,7 +34,7 @@ public class IndexDataBase {
             Directory dir = FSDirectory.open(Paths.get(indexPath));
 
             IndexWriterConfig iwc = new IndexWriterConfig(analyzer);
-
+            
             //传入目录和分词器
             IndexWriter writer = new IndexWriter(dir, iwc);
             //写入到目录文件中

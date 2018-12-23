@@ -48,8 +48,9 @@ public class DefaultConfig implements Configuration {
   /*
    * 分词器默认字典路径
    */
-  private static final String PATH_DIC_MAIN = "com/xywy/lucene/dic/main2012.dic";
-  private static final String PATH_DIC_QUANTIFIER = "com/xywy/lucene/dic/quantifier.dic";
+  //com/xywy/lucene/dic/main2012.dic
+  private static final String PATH_DIC_MAIN = "main2012.dic";
+  private static final String PATH_DIC_QUANTIFIER = "quantifier.dic";
   
 //  private static final String PATH_DIC_MAIN = "org/wltea/analyzer/dic/sensitive.dic";
 //  private static final String PATH_DIC_QUANTIFIER = "org/wltea/analyzer/dic/web.dic";
