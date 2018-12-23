@@ -53,15 +53,12 @@ Lucene的目的是为软件开发人员提供一个简单易用的工具包，�
 - 5、搜索界面地址：http://localhost:8080/search
 ```java
     //搜索，实现高亮
-    @GetMapping("/getSearchText")
-    public ModelAndView getSearchText(String keyWord,String field,ModelAndView mv) throws Exception {
-        List<Map> mapList = searchDataBase.search(field, keyWord);
-        mv.setViewName("/result");
-        mv.addObject("mapList",mapList);
-        return mv;
+    @GetMapping("search/{q}")
+    public List<Map> getSearchText(@PathVariable String q) throws Exception {
+        List<Map> mapList = searchDataBase.search("summary", q);
+        return mapList;
     }
 ```
 ## 运行效果
-![search](https://github.com/suxiongwei/lucene/blob/master/src/main/resources/static/img/search.jpg)
-![result](https://github.com/suxiongwei/lucene/blob/master/src/main/resources/static/img/result.jpg)
+![search](https://github.com/suxiongwei/lucene/blob/master/src/main/resources/static/img/search.png)
 

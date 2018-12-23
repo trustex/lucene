@@ -3,15 +3,16 @@ package com.xywy.lucene.api;
 import com.xywy.lucene.mapper.BaikeMapper;
 import com.xywy.lucene.model.Baike;
 import com.xywy.lucene.util.IndexDataBase;
+import com.xywy.lucene.util.MsgResponse;
 import com.xywy.lucene.util.SearchDataBase;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.TextField;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +23,7 @@ public class SearchController {
     @Autowired private SearchDataBase searchDataBase;
 
 
-    @GetMapping("/createIndex")
+    @GetMapping("/index")
     public String createIndex(int limit,int offset) {
         // 拉取数据
         List<Baike> baikes = baikeMapper.getAllBaike(limit,offset);
@@ -51,16 +52,10 @@ public class SearchController {
     }
 
     //搜索，实现高亮
-    @GetMapping("/getSearchText")
-    public ModelAndView getSearchText(String keyWord,String field,ModelAndView mv) throws Exception {
-        if(keyWord == null || keyWord.equals("")){
-            mv.setViewName("/error");
-            mv.addObject("message","查询关键词不能为空");
-        }
-        List<Map> mapList = searchDataBase.search(field, keyWord);
-        mv.setViewName("/result");
-        mv.addObject("mapList",mapList);
-        return mv;
+    @GetMapping("search/{q}")
+    public List<Map> getSearchText(@PathVariable String q) throws Exception {
+        List<Map> mapList = searchDataBase.search("summary", q);
+        return mapList;
     }
 
     @GetMapping(value = "/search")
