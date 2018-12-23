@@ -33,8 +33,6 @@ import org.apache.lucene.util.AttributeFactory;
 
 import java.io.IOException;
 
-;
-
 
 /**
  * IK分词器 Lucene Tokenizer适配器类
