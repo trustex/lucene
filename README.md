@@ -13,6 +13,10 @@ Lucene的目的是为软件开发人员提供一个简单易用的工具包，�
 + 项目框架:SpringBoot + lucene 6.6.5 + IKAnalyzer 2012FF
     + lucene 6.6.5:<http://www.apache.org/dyn/closer.lua/lucene/java/6.6.5>
     + IKAnalyzer 2012FF:<https://gitee.com/wltea/IK-Analyzer-2012FF>
+    
+## 学习记录
+- 1、[SpellCheck拼写纠错]()
+- 2、[字典树]()
 ## 数据准备
 介绍以下俩种初始数据的方式:
 - 1、通过[数据库代码baike.sql](https://github.com/suxiongwei/lucene/blob/master/src/main/resources/static/db/baike.sql)中
@@ -23,7 +27,7 @@ Lucene的目的是为软件开发人员提供一个简单易用的工具包，�
 - 2、开启MySQL服务
 - 3、启动服务：Run SearchApp
 - 4、生成索引：访问http://localhost:8080/createIndex?limit=10000&offset=0
-```java
+```
     @GetMapping("/createIndex")
     public String createIndex(int limit,int offset) {
         // 拉取数据
@@ -51,7 +55,7 @@ Lucene的目的是为软件开发人员提供一个简单易用的工具包，�
 ```
 
 - 5、搜索界面地址：http://localhost:8080/search
-```java
+```
     //搜索，实现高亮
     @GetMapping("search/{q}")
     public List<Map> getSearchText(@PathVariable String q) throws Exception {
