@@ -70,10 +70,9 @@ public class SpellCheckTest {
                 "形象地将其翻译为《屌丝女士》，对其无比热衷。于是我们决定着手拍一部属于中国人，" +
                 "带强烈国人屌丝色彩的《屌丝男士》。");
 
-        String word = "吊丝男士";
+        String word = "屌是男士";
         spellCheckTest.search(word, 4);
 
-//        // 第二种：获取项目路径    D:\git\daotie\daotie
 //        File directory = new File("");// 参数为空
 //        String courseFile = directory.getCanonicalPath();
 //        System.out.println(courseFile);
