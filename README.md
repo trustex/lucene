@@ -15,8 +15,12 @@ Lucene的目的是为软件开发人员提供一个简单易用的工具包，�
     + IKAnalyzer 2012FF:<https://gitee.com/wltea/IK-Analyzer-2012FF>
     
 ## 学习记录
-- 1、[SpellCheck拼写纠错]()
-- 2、[字典树]()
+- 1、[SpellCheck拼写纠错](https://github.com/suxiongwei/lucene/blob/master/src/main/resources/static/md/SpellCheck拼写纠错.md)
+- 2、[IKAnalyzer简单介绍](https://github.com/suxiongwei/lucene/blob/master/src/main/resources/static/md/IKAnalyzer简单介绍.md)
+- 3、[lucene相关度打分](https://github.com/suxiongwei/lucene/blob/master/src/main/resources/static/md/lucene相关度打分.md)
+- 4、[全文检索及lucene如何实现全文检索](https://github.com/suxiongwei/lucene/blob/master/src/main/resources/static/md/全文检索及lucene如何实现全文检索.md)
+- 5、[倒排索引](https://github.com/suxiongwei/lucene/blob/master/src/main/resources/static/md/倒排索引.md)
+- 6、[字典树](https://github.com/suxiongwei/lucene/blob/master/src/main/resources/static/md/字典树.md)
 ## 数据准备
 介绍以下俩种初始数据的方式:
 - 1、通过[数据库代码baike.sql](https://github.com/suxiongwei/lucene/blob/master/src/main/resources/static/db/baike.sql)中
