@@ -71,7 +71,7 @@ public class SpellCheckTest {
                 "带强烈国人屌丝色彩的《屌丝男士》。");
 
         String word = "屌是男士";
-        spellCheckTest.search(word, 4);
+        spellCheckTest.search(word, 1);
 
 //        File directory = new File("");// 参数为空
 //        String courseFile = directory.getCanonicalPath();
